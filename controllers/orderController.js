@@ -16,3 +16,27 @@ export async function createOrder(req, res, next) {
 }
 export async function getMyOrders(req, res, next) { try { res.json(await Order.find({ user: req.user._id }).sort({ createdAt: -1 })); } catch (error) { next(error); } }
 export async function getOrder(req, res, next) { try { const order = await Order.findOne({ _id: req.params.id, user: req.user._id }).populate('items.product'); if (!order) return res.status(404).json({ message: 'Order not found' }); return res.json(order); } catch (error) { next(error); } }
+
+// --- Admin panel functions ---
+
+// Returns every order in the store, newest first. Used by the admin dashboard.
+export async function getAllOrders(req, res, next) {
+  try {
+    const orders = await Order.find().populate('user', 'name email').sort({ createdAt: -1 });
+    res.json(orders);
+  } catch (error) { next(error); }
+}
+
+// Updates only the status field of an order (pending/processing/shipped/delivered).
+export async function updateOrderStatus(req, res, next) {
+  try {
+    const { status } = req.body;
+    const allowed = ['pending', 'processing', 'shipped', 'delivered'];
+    if (!allowed.includes(status)) {
+      return res.status(400).json({ message: 'Status must be one of: ' + allowed.join(', ') });
+    }
+    const order = await Order.findByIdAndUpdate(req.params.id, { status }, { new: true });
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+    res.json(order);
+  } catch (error) { next(error); }
+}

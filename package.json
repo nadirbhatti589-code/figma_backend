@@ -10,13 +10,13 @@
   },
   "dependencies": {
     "bcryptjs": "latest",
-    "cloudinary": "latest",
+    "cloudinary": "^2.11.0",
     "cors": "latest",
     "dotenv": "latest",
     "express": "latest",
     "jsonwebtoken": "latest",
     "mongoose": "latest",
-    "multer": "latest"
+    "multer": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "latest"

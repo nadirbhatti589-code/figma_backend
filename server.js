@@ -5,6 +5,7 @@ import { connectDatabase } from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+ import uploadRoutes from './routes/uploadRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import newsletterRoutes from './routes/newsletterRoutes.js';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
@@ -27,6 +28,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/products', reviewRoutes);
 app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/upload', uploadRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
