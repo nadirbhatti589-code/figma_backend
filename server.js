@@ -15,12 +15,14 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: [
+   origin: [
     'http://localhost:5173',
     process.env.FRONTEND_URL, // your deployed frontend URL, set this in Vercel Environment Variables
+    process.env.ADMIN_URL, // your deployed admin panel URL
   ],
   credentials: true,
 }));
+
 app.use(express.json());
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
